@@ -78,17 +78,14 @@ void az_draw_bad_copter(
   const az_color_t inner = az_color3f(0.4f + 0.6f * flare, 0.45f, 0.45f + 0.55f * frozen);
 
   // Rotor hub
-  glBegin(GL_TRIANGLE_STRIP); {
-    az_gl_color(outer); glVertex2f(-21, 2);
-    az_gl_color(inner); glVertex2f(-14, 2);
-    az_gl_color(outer); glVertex2f(-22, 0);
-    az_gl_color(inner); glVertex2f(-14, 0);
-    az_gl_color(outer); glVertex2f(-21, -2);
-    az_gl_color(inner); glVertex2f(-14, -2);
+  glBegin(GL_QUAD_STRIP); {
+    az_gl_color(outer); glVertex2f(-21, 2); glVertex2f(-14, 2);
+    az_gl_color(inner); glVertex2f(-22, 0); glVertex2f(-14, 0);
+    az_gl_color(outer); glVertex2f(-21, -2); glVertex2f(-14, -2);
   } glEnd();
 
   // Body siding
-  glBegin(GL_TRIANGLE_STRIP); {
+  glBegin(GL_QUAD_STRIP); {
     az_gl_color(outer); glVertex2f(14, 21);
     az_gl_color(inner); glVertex2f(10, 17);
     az_gl_color(outer); glVertex2f(-14, 21);
@@ -154,9 +151,11 @@ void az_draw_bad_small_truck(
   } glEnd();
 
   // Body siding
-  glBegin(GL_TRIANGLE_STRIP); {
-    const az_color_t outer = az_color3f(0.15f + 0.85f * flare, 0.25f, 0.2f + 0.8f * frozen);
-    const az_color_t inner = az_color3f(0.4f + 0.6f * flare, 0.45f, 0.45f + 0.55f * frozen);
+  glBegin(GL_QUAD_STRIP); {
+    const az_color_t outer =
+      az_color3f(0.15f + 0.85f * flare, 0.25f, 0.2f + 0.8f * frozen);
+    const az_color_t inner =
+      az_color3f(0.4f + 0.6f * flare, 0.45f, 0.45f + 0.55f * frozen);
     az_gl_color(outer); glVertex2f(10, 14);
     az_gl_color(inner); glVertex2f(10, 9);
     az_gl_color(outer); glVertex2f(-30, 14);
@@ -212,15 +211,14 @@ void az_draw_bad_small_auv(
   } glEnd();
 
   // Propeller axle
-  const az_color_t outer = az_color3f(0.25f + 0.75f * flare, 0.35f, 0.2f + 0.8f * frozen);
-  const az_color_t inner = az_color3f(0.5f + 0.5f * flare, 0.55f, 0.45f + 0.55f * frozen);
-  glBegin(GL_TRIANGLE_STRIP); {
-    az_gl_color(outer); glVertex2f(-36, 2);
-    az_gl_color(inner); glVertex2f(-29, 2);
-    az_gl_color(outer); glVertex2f(-37, 0);
-    az_gl_color(inner); glVertex2f(-29, 0);
-    az_gl_color(outer); glVertex2f(-36, -2);
-    az_gl_color(inner); glVertex2f(-29, -2);
+  const az_color_t outer =
+    az_color3f(0.25f + 0.75f * flare, 0.35f, 0.2f + 0.8f * frozen);
+  const az_color_t inner =
+    az_color3f(0.5f + 0.5f * flare, 0.55f, 0.45f + 0.55f * frozen);
+  glBegin(GL_QUAD_STRIP); {
+    az_gl_color(outer); glVertex2f(-36, 2); glVertex2f(-29, 2);
+    az_gl_color(inner); glVertex2f(-37, 0); glVertex2f(-29, 0);
+    az_gl_color(outer); glVertex2f(-36, -2); glVertex2f(-29, -2);
   } glEnd();
 
   // Panels
@@ -255,9 +253,8 @@ void az_draw_bad_small_auv(
     glVertex2f(30, -10);
     glVertex2f(10, -16);
   } glEnd();
-
   // Body siding
-  glBegin(GL_TRIANGLE_STRIP); {
+  glBegin(GL_QUAD_STRIP); {
     az_gl_color(outer); glVertex2f(10, 14);
     az_gl_color(inner); glVertex2f(10, 6);
     az_gl_color(outer); glVertex2f(-24, 14);
