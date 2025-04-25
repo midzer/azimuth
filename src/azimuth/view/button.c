@@ -21,7 +21,7 @@
 
 #include <math.h>
 
-#include <SDL_opengl.h>
+#include <GL/gl.h>
 
 #include "azimuth/gui/event.h"
 #include "azimuth/state/sound.h"

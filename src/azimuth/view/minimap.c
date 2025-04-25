@@ -21,7 +21,7 @@
 
 #include <math.h>
 
-#include <SDL_opengl.h>
+#include <GL/gl.h>
 
 #include "azimuth/state/planet.h"
 #include "azimuth/state/room.h"

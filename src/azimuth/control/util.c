@@ -25,7 +25,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#if !defined(__WINDOWS__) && !defined(__APPLE__)
+#if !defined(__WINDOWS__) && !defined(__APPLE__) && !defined(__EMSCRIPTEN__)
 #include <string.h>
 #include <sys/stat.h>
 #include <wordexp.h>
@@ -48,7 +48,7 @@
 // If anything fails, this will return a NULL pointer.
 // Free the returned string with SDL_free().
 static char *az_get_app_data_directory(void) {
-#if !defined(__WINDOWS__) && !defined(__APPLE__)
+#if !defined(__WINDOWS__) && !defined(__APPLE__) && !defined(__EMSCRIPTEN__)
   // First, do tilde-expansion so we get a path in the user's homedir.
   wordexp_t words;
   wordexp("~/.azimuth-game", &words, 0);

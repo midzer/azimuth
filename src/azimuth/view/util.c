@@ -21,7 +21,7 @@
 
 #include <math.h>
 
-#include <SDL_opengl.h>
+#include <GL/gl.h>
 
 #include "azimuth/util/color.h"
 #include "azimuth/util/vector.h"

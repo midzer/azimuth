@@ -24,7 +24,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-#include <SDL_opengl.h>
+#include <GL/gl.h>
 
 #include "azimuth/constants.h"
 #include "azimuth/gui/event.h"

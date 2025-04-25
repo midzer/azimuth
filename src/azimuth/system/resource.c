@@ -42,7 +42,7 @@ extern const struct resource_entry {
 extern const size_t resource_index_size;
 extern const char _binary_resources_start[];
 
-#if defined(__APPLE__)
+#if defined(__APPLE__) || defined(__EMSCRIPTEN__)
 // Use app-bundle resources on macOS
 bool az_system_resource_reader(const char *name, az_reader_t *reader) {
   char *resource_dir = SDL_GetBasePath();

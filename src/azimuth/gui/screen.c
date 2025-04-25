@@ -23,7 +23,7 @@
 #include <stdbool.h>
 
 #include <SDL.h>
-#include <SDL_opengl.h>
+#include <GL/gl.h>
 
 #include "azimuth/constants.h"
 #include "azimuth/gui/audio.h"
@@ -93,14 +93,14 @@ void az_init_gui(bool fullscreen, bool enable_audio) {
   // Enable OpenGL double-buffering:
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
   // Enable antialiasing:
-  SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-  SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 2);
+  //SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+  //SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 2);
   SDL_GetDesktopDisplayMode(0, &display_mode);
   window = SDL_CreateWindow(
     "Azimuth",
     SDL_WINDOWPOS_CENTERED_DISPLAY(0), SDL_WINDOWPOS_CENTERED_DISPLAY(0),
-    display_mode.w, display_mode.h,
-    SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL | (fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
+    640, 480,
+    SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI | (fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
   if (NULL == window) {
     AZ_FATAL("SDL_CreateWindow failed: %s\n", SDL_GetError());
   }

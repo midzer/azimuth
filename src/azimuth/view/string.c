@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <SDL_opengl.h>
+#include <GL/gl.h>
 
 #include "azimuth/state/dialog.h"
 #include "azimuth/util/key.h"

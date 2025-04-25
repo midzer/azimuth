@@ -22,7 +22,7 @@
 #include <assert.h>
 #include <math.h>
 
-#include <SDL_opengl.h>
+#include <GL/gl.h>
 
 #include "azimuth/state/gravfield.h"
 #include "azimuth/state/space.h"

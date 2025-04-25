@@ -25,7 +25,7 @@
 #include <stddef.h>
 #include <stdio.h>
 
-#include <SDL_opengl.h>
+#include <GL/gl.h>
 
 #include "azimuth/constants.h"
 #include "azimuth/util/misc.h"

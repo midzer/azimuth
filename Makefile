@@ -17,7 +17,7 @@
 # with Azimuth.  If not, see <http://www.gnu.org/licenses/>.                  #
 #=============================================================================#
 
-BUILDTYPE ?= debug
+BUILDTYPE ?= release
 TARGET ?= host
 
 SRCDIR = src
@@ -42,7 +42,7 @@ else ifeq "$(BUILDTYPE)" "release"
   # For release builds, disable asserts, but don't warn about e.g. static
   # functions or local variables that are only used for asserts, and which
   # therefore become unused when asserts are disabled.
-  CFLAGS += -O2 -DNDEBUG -Wno-unused-function -Wno-unused-variable \
+  CFLAGS += -flto -O3 -fno-exceptions -fno-rtti -DNDEBUG -Wno-unused-function -Wno-unused-variable \
             -Wno-empty-body -Wno-unused-but-set-variable
 else
   $(error BUILDTYPE must be 'debug' or 'release')
@@ -56,7 +56,7 @@ ifeq "$(TARGET)" "host"
     ARCH = i386
   endif
   # Use clang if it's available, otherwise use gcc.
-  CC := $(shell which clang > /dev/null && echo clang || echo gcc)
+  CC := emcc #$(shell which clang > /dev/null && echo clang || echo gcc)
   LD = ld
   STRIP = strip
   ifeq "$(BUILDTYPE)" "debug"
@@ -140,7 +140,7 @@ else ifeq "$(OS_NAME)" "Windows"
                     $(OBJDIR)/info.res
   ALL_TARGETS += windows_app
 else
-  CFLAGS += $(shell $(PKG_CONFIG) --cflags sdl2 gl)
+  CFLAGS += -sUSE_SDL=2 #$(shell $(PKG_CONFIG) --cflags sdl2 gl)
   MAIN_LIBFLAGS = -lm $(shell $(PKG_CONFIG) --libs sdl2 gl)
   TEST_LIBFLAGS = -lm
   MUSE_LIBFLAGS = -lm $(shell $(PKG_CONFIG) --libs sdl2)

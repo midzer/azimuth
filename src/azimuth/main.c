@@ -38,6 +38,8 @@
 #include "azimuth/view/dialog.h" // for az_init_portrait_drawing
 #include "azimuth/view/wall.h" // for az_init_wall_drawing
 
+#include <gl4esinit.h>
+
 /*===========================================================================*/
 
 static az_planet_t planet;
@@ -57,6 +59,7 @@ typedef enum {
 } az_controller_t;
 
 int main(int argc, char **argv) {
+  initialize_gl4es();
   az_init_sound_datas();
   az_init_baddie_datas();
   az_init_wall_datas();
