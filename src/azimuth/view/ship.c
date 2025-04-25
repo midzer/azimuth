@@ -248,19 +248,19 @@ void az_draw_ship_body(const az_ship_t *ship, az_clock_t clock) {
         } glPopMatrix();
       }
       // Engines:
-      glBegin(GL_QUADS); {
+      glBegin(GL_TRIANGLE_STRIP); {
         // Struts:
         glColor3f(0.25, 0.25, 0.25); // dark gray
         glVertex2f( 1,  9); glVertex2f(-7,  9);
-        glVertex2f(-7, -9); glVertex2f( 1, -9);
+        glVertex2f( 1, -9); glVertex2f(-7, -9);
         // Port engine:
         glVertex2f(-10,  12); glVertex2f(  6,  12);
         glColor3f(0.75, 0.75, 0.75); // light gray
-        glVertex2f(  8,   7); glVertex2f(-11,   7);
+        glVertex2f(-11,   7); glVertex2f(  8,   7);
         // Starboard engine:
         glVertex2f(  8,  -7); glVertex2f(-11,  -7);
         glColor3f(0.25, 0.25, 0.25); // dark gray
-        glVertex2f(-10, -12); glVertex2f(  6, -12);
+        glVertex2f(  6, -12); glVertex2f(-10, -12);
       } glEnd();
       // Main body:
       if (ship->ordn_held) {

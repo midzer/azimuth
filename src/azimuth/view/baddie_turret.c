@@ -45,20 +45,34 @@ static void draw_normal_turret_cracks(const az_baddie_t *baddie) {
 }
 
 static void draw_crawling_turret_legs(float flare, float frozen,
-                                      az_clock_t clock) {
-  glBegin(GL_QUADS); {
-    const az_color_t dark = az_color3f(
-        0.25 + 0.1 * flare - 0.1 * frozen,
-        0.25 - 0.1 * flare - 0.1 * frozen,
-        0.25 - 0.1 * flare + 0.1 * frozen);
-    const int zig = az_clock_zigzag(5, 6, clock);
-    az_gl_color(dark); glVertex2f(0, 10); glVertex2f(-21, -10 + zig);
-    glColor3f(0.4 + 0.25 * flare - 0.25 * frozen,
-              0.4 - 0.25 * flare - 0.25 * frozen,
-              0.4 - 0.25 * flare + 0.25 * frozen);
-    glVertex2f(-20, -20 + zig); glVertex2f(0, -10);
-    glVertex2f(0, 10); glVertex2f(-20, 20 - zig);
-    az_gl_color(dark); glVertex2f(-21, 10 - zig); glVertex2f(0, -10);
+  az_clock_t clock) {
+  const az_color_t dark = az_color3f(
+    0.25 + 0.1 * flare - 0.1 * frozen,
+    0.25 - 0.1 * flare - 0.1 * frozen,
+    0.25 - 0.1 * flare + 0.1 * frozen);
+  const int zig = az_clock_zigzag(5, 6, clock);
+  const GLfloat new_r = 0.4 + 0.25 * flare - 0.25 * frozen;
+  const GLfloat new_g = 0.4 - 0.25 * flare - 0.25 * frozen;
+  const GLfloat new_b = 0.4 - 0.25 * flare + 0.25 * frozen;
+
+  // First leg segment
+  glBegin(GL_TRIANGLE_STRIP); {
+    az_gl_color(dark);
+    glVertex2f(0.0f, 10.0f);
+    glVertex2f(-21.0f, -10.0f + zig);
+    glColor3f(new_r, new_g, new_b);
+    glVertex2f(0.0f, -10.0f);
+    glVertex2f(-20.0f, -20.0f + zig);
+  } glEnd();
+
+  // Second leg segment
+  glBegin(GL_TRIANGLE_STRIP); {
+    glColor3f(new_r, new_g, new_b);
+    glVertex2f(0.0f, 10.0f);
+    glVertex2f(-20.0f, 20.0f - zig);
+    az_gl_color(dark);
+    glVertex2f(0.0f, -10.0f);
+    glVertex2f(-21.0f, 10.0f - zig);
   } glEnd();
 }
 

@@ -60,14 +60,14 @@ void az_draw_bad_clam(
           glVertex2d(polygon.vertices[j].x, polygon.vertices[j].y);
         }
       } glEnd();
-      glBegin(GL_QUADS); {
+      glBegin(GL_TRIANGLE_STRIP); {
         const int n = polygon.num_vertices;
         glVertex2d(polygon.vertices[0].x, polygon.vertices[0].y);
         glVertex2d(polygon.vertices[n - 1].x, polygon.vertices[n - 1].y);
         glColor4f(0.25, 0, 0.5, 0);
-        glVertex2d(polygon.vertices[n - 2].x, polygon.vertices[n - 2].y);
         glVertex2d(polygon.vertices[1].x, polygon.vertices[1].y);
-      } glEnd();
+        glVertex2d(polygon.vertices[n - 2].x, polygon.vertices[n - 2].y);
+      } glEnd();      
     } glPopMatrix();
   }
   glBegin(GL_TRIANGLE_FAN); {

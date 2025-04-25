@@ -197,17 +197,17 @@ void az_victory_draw_screen(const az_victory_state_t *state) {
     draw_specks(state);
     // Draw final boss explosion:
     if (state->step == AZ_VS_EXPLODE && state->step_timer >= 1.5) {
-      glBegin(GL_QUADS); {
+      glBegin(GL_TRIANGLE_STRIP); {
         const GLfloat progress = state->step_timer - 1.5;
         const GLfloat outer = 1.5f * AZ_SCREEN_WIDTH;
         const GLfloat inner = outer * progress * progress;
         glColor4f(1, 1, 1, progress);
         glVertex2f(outer, inner); glVertex2f(-outer, inner);
-        glVertex2f(-outer, -inner); glVertex2f(outer, -inner);
+        glVertex2f(outer, -inner); glVertex2f(-outer, -inner);
         glVertex2f(inner, outer); glVertex2f(-inner, outer);
-        glVertex2f(-inner, inner); glVertex2f(inner, inner);
+        glVertex2f(inner, inner); glVertex2f(-inner, inner);
         glVertex2f(inner, -outer); glVertex2f(-inner, -outer);
-        glVertex2f(-inner, -inner); glVertex2f(inner, -inner);
+        glVertex2f(inner, -inner); glVertex2f(-inner, -inner);
       } glEnd();
     }
   } glPopMatrix();

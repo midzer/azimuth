@@ -79,11 +79,11 @@ static double mode_fade_alpha(az_space_state_t *state) {
 
 static void tint_screen(GLfloat gray, GLfloat alpha) {
   glColor4f(gray, gray, gray, alpha);
-  glBegin(GL_QUADS); {
+  glBegin(GL_TRIANGLE_STRIP); {
     glVertex2i(0, 0);
     glVertex2i(0, AZ_SCREEN_HEIGHT);
-    glVertex2i(AZ_SCREEN_WIDTH, AZ_SCREEN_HEIGHT);
     glVertex2i(AZ_SCREEN_WIDTH, 0);
+    glVertex2i(AZ_SCREEN_WIDTH, AZ_SCREEN_HEIGHT);
   } glEnd();
 }
 
@@ -298,7 +298,7 @@ void az_space_draw_screen(az_space_state_t *state) {
     // If we're in a superheated room, make everything glow red.
     const az_room_flags_t properties = room_properties(state);
     if (properties & AZ_ROOMF_HEATED) {
-      glBegin(GL_QUADS); {
+      glBegin(GL_TRIANGLE_STRIP); {
         const GLfloat alpha1 = 0.1 + 0.03 * cos(state->camera.wobble_theta);
         const GLfloat alpha2 = 0.1 + 0.03 * sin(state->camera.wobble_theta);
         glColor4f(1, 0, 0, alpha1);
@@ -306,9 +306,9 @@ void az_space_draw_screen(az_space_state_t *state) {
         glColor4f(1, 0, 0, alpha2);
         glVertex2i(0, AZ_SCREEN_HEIGHT);
         glColor4f(1, 0, 0, alpha1);
-        glVertex2i(AZ_SCREEN_WIDTH, AZ_SCREEN_HEIGHT);
-        glColor4f(1, 0, 0, alpha2);
         glVertex2i(AZ_SCREEN_WIDTH, 0);
+        glColor4f(1, 0, 0, alpha2);
+        glVertex2i(AZ_SCREEN_WIDTH, AZ_SCREEN_HEIGHT);
       } glEnd();
     }
 
@@ -340,16 +340,16 @@ void az_space_draw_screen(az_space_state_t *state) {
           const az_vector_t position = state->boss_death_mode.boss.position;
           az_gl_translated(position);
           az_gl_rotated(az_vtheta(position));
-          glBegin(GL_QUADS); {
+          glBegin(GL_TRIANGLE_STRIP); {
             const GLfloat outer = 1.5f * AZ_SCREEN_WIDTH;
             const GLfloat inner = outer * progress * progress;
             glColor4f(1, 1, 1, progress);
             glVertex2f(outer, inner); glVertex2f(-outer, inner);
-            glVertex2f(-outer, -inner); glVertex2f(outer, -inner);
+            glVertex2f(outer, -inner); glVertex2f(-outer, -inner);
             glVertex2f(inner, outer); glVertex2f(-inner, outer);
-            glVertex2f(-inner, inner); glVertex2f(inner, inner);
+            glVertex2f(inner, inner); glVertex2f(-inner, inner);
             glVertex2f(inner, -outer); glVertex2f(-inner, -outer);
-            glVertex2f(-inner, -inner); glVertex2f(inner, -inner);
+            glVertex2f(inner, -inner); glVertex2f(-inner, -inner);
           } glEnd();
         } glPopMatrix();
       }

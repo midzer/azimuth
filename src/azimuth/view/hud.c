@@ -45,11 +45,11 @@
 
 static void draw_mbox(double left, double top, double width, double height) {
   glColor4f(0, 0, 0, 0.875);
-  glBegin(GL_QUADS); {
+  glBegin(GL_TRIANGLE_STRIP); {
     glVertex2d(left, top);
     glVertex2d(left + width, top);
-    glVertex2d(left + width, top + height);
     glVertex2d(left, top + height);
+    glVertex2d(left + width, top + height);
   } glEnd();
   glColor3f(0, 0, 0);
   glBegin(GL_LINE_LOOP); {
@@ -62,11 +62,11 @@ static void draw_mbox(double left, double top, double width, double height) {
 
 static void draw_dbox(double left, double top, double width, double height) {
   glColor4f(0, 0, 0, 0.875);
-  glBegin(GL_QUADS); {
+  glBegin(GL_TRIANGLE_STRIP); {
     glVertex2d(left - 2, top - 2);
     glVertex2d(left + width + 2, top - 2);
-    glVertex2d(left + width + 2, top + height + 2);
     glVertex2d(left - 2, top + height + 2);
+    glVertex2d(left + width + 2, top + height + 2);
   } glEnd();
   glColor3f(0, 0.5, 0);
   glBegin(GL_LINE_LOOP); {
@@ -85,11 +85,11 @@ static void draw_dbox(double left, double top, double width, double height) {
 
 static void tint_hud_rect(GLfloat width, GLfloat height) {
   glColor4f(0, 0, 0, 0.75);
-  glBegin(GL_QUADS); {
+  glBegin(GL_TRIANGLE_STRIP); {
     glVertex2f(0, 0);
     glVertex2f(0, height);
-    glVertex2f(width, height);
     glVertex2f(width, 0);
+    glVertex2f(width, height);
   } glEnd();
 }
 
@@ -465,9 +465,9 @@ static void draw_hud_message(const az_preferences_t *prefs,
     glTranslatef((AZ_SCREEN_WIDTH - width) / 2, top, 0);
 
     glColor4f(0.1, 0.1, 0.1, 0.9); // dark gray tint
-    glBegin(GL_QUADS); {
+    glBegin(GL_TRIANGLE_STRIP); {
       glVertex2i(0, 0); glVertex2i(0, height);
-      glVertex2i(width, height); glVertex2i(width, 0);
+      glVertex2i(width, 0); glVertex2i(width, height);
     } glEnd();
 
     az_draw_paragraph(16, AZ_ALIGN_CENTER, width/2, 6, 20, -1,

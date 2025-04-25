@@ -328,11 +328,11 @@ void az_draw_planet_debris(az_clock_t clock) {
 
 static void tint_screen(GLfloat gray, GLfloat alpha) {
   glColor4f(gray, gray, gray, alpha);
-  glBegin(GL_QUADS); {
+  glBegin(GL_TRIANGLE_STRIP); {
     glVertex2i(0, 0);
     glVertex2i(0, AZ_SCREEN_HEIGHT);
-    glVertex2i(AZ_SCREEN_WIDTH, AZ_SCREEN_HEIGHT);
     glVertex2i(AZ_SCREEN_WIDTH, 0);
+    glVertex2i(AZ_SCREEN_WIDTH, AZ_SCREEN_HEIGHT);
   } glEnd();
 }
 
@@ -497,16 +497,16 @@ static void draw_escape_scene(
         az_gl_rotated(AZ_DEG2RAD(125));
         glColor3f(0, 0, 0);
         // Engines:
-        glBegin(GL_QUADS); {
+        glBegin(GL_TRIANGLE_STRIP); {
           // Struts:
           glVertex2f( 1,  9); glVertex2f(-7,  9);
-          glVertex2f(-7, -9); glVertex2f( 1, -9);
+          glVertex2f( 1, -9); glVertex2f(-7, -9);
           // Port engine:
           glVertex2f(-10,  12); glVertex2f(  6,  12);
-          glVertex2f(  8,   7); glVertex2f(-11,   7);
+          glVertex2f(-11,   7); glVertex2f(  8,   7);
           // Starboard engine:
           glVertex2f(  8,  -7); glVertex2f(-11,  -7);
-          glVertex2f(-10, -12); glVertex2f(  6, -12);
+          glVertex2f(  6, -12); glVertex2f(-10, -12);
         } glEnd();
         // Main body:
         glBegin(GL_TRIANGLE_FAN); {

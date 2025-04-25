@@ -32,20 +32,23 @@
 /*===========================================================================*/
 
 static void draw_feet(az_color_t color1, az_color_t color2, az_clock_t clock,
-                      int slowdown, GLfloat step_up, bool stopped) {
-  glBegin(GL_QUADS); {
-    const GLfloat offset =
-      (stopped ? 0.0f : 0.8f * (az_clock_zigzag(5, slowdown, clock) - 2.0f));
-    for (int i = 0; i < 4; ++i) {
+  int slowdown, GLfloat step_up, bool stopped) {
+  const GLfloat offset = (stopped ? 0.0f : 0.8f * (az_clock_zigzag(5, slowdown, clock) - 2.0f));
+  for (int i = 0; i < 4; ++i) {
+    const GLfloat x = -20.0f + (i == 0 || i == 3 ? step_up : 0.0f);
+    const GLfloat y_base = -12.0f + 8.0f * i;
+    const GLfloat y_offset = (2 * (i % 2) - 1) * offset;
+    const GLfloat y = y_base + y_offset;
+
+    glBegin(GL_TRIANGLE_STRIP); {
       az_gl_color(color1);
-      glVertex2f(0, 5); glVertex2f(0, -5);
-      const GLfloat x = -20.0f + (i == 0 || i == 3 ? step_up : 0.0f);
-      const GLfloat y = -12.0f + 8.0f * i + (2 * (i % 2) - 1) * offset;
-      glVertex2f(x, y - 2);
+      glVertex2f(0.0f, 5.0f);
+      glVertex2f(0.0f, -5.0f);
+      glVertex2f(x, y - 2.0f);
       az_gl_color(color2);
-      glVertex2f(x, y + 2);
-    }
-  } glEnd();
+      glVertex2f(x, y + 2.0f);
+    } glEnd();
+  }
 }
 
 static void draw_normal_feet(float frozen, az_clock_t clock, bool stopped) {

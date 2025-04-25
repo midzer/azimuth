@@ -69,10 +69,10 @@ static void draw_console(const az_node_t *node, az_clock_t clock) {
         glVertex2f(26, -3.5); glVertex2f(15, -1.5);
       } glEnd();
       // Box:
-      glBegin(GL_QUADS); {
+      glBegin(GL_TRIANGLE_STRIP); {
         glColor3f(0.4, 0.4, 0.4);
         glVertex2f(29, 18); glVertex2f(29, -19);
-        glVertex2f(48, -19); glVertex2f(48, 18);
+        glVertex2f(48, 18); glVertex2f(48, -19);
         const int slowdown = (node->status == AZ_NS_ACTIVE ? 6 : 16);
         for (int i = 0; i < 3; ++i) {
           const int size = 5;
@@ -130,7 +130,7 @@ static void draw_console(const az_node_t *node, az_clock_t clock) {
           glVertex2f(-20, 20); glVertex2f(-20, -20);
         } glEnd();
       } else {
-        glBegin(GL_QUADS); {
+        glBegin(GL_TRIANGLE_STRIP); {
           const int index = (node->status == AZ_NS_READY ?
                              4 - az_clock_mod(5, 6, clock) :
                              az_clock_mod(5, 10, clock));
@@ -145,11 +145,11 @@ static void draw_console(const az_node_t *node, az_clock_t clock) {
           }
           glColor4f(1, 1, (node->status == AZ_NS_READY ? 0.0f : 1.0f), 0);
           switch (index) {
-            case 0: glVertex2f(-15, -20); glVertex2f(-15,   20); break;
-            case 1: glVertex2f(26.5, 15); glVertex2f(-20,   15); break;
-            case 2: glVertex2f( 24,   0); glVertex2f( 19,   20); break;
-            case 3: glVertex2f( 19, -20); glVertex2f( 24,    0); break;
-            case 4: glVertex2f(-20, -15); glVertex2f(26.5, -15); break;
+            case 0: glVertex2f(-15,   20); glVertex2f(-15, -20); break;
+            case 1: glVertex2f(-20,   15); glVertex2f(26.5, 15); break;
+            case 2: glVertex2f( 19,   20); glVertex2f( 24,   0); break;
+            case 3: glVertex2f( 24,    0); glVertex2f( 19, -20); break;
+            case 4: glVertex2f(26.5, -15); glVertex2f(-20, -15); break;
             default: AZ_ASSERT_UNREACHABLE();
           }
         } glEnd();
@@ -224,11 +224,11 @@ static void draw_console(const az_node_t *node, az_clock_t clock) {
         glColor3f(0.05, 0.15, 0.05);
         glVertex2f(-24, -4.5); glVertex2f(-12, -2.5);
       } glEnd();
-      glBegin(GL_QUADS); {
+      glBegin(GL_TRIANGLE_STRIP); {
         // Connecting strut:
         glColor3f(0.35, 0.35, 0.35);
         glVertex2f(-24, 21); glVertex2f(-30, 21);
-        glVertex2f(-30, -21); glVertex2f(-24, -21);
+        glVertex2f(-24, -21); glVertex2f(-30, -21);
         // Glow:
         if (node->status == AZ_NS_ACTIVE) {
           if (az_clock_mod(2, 5, clock)) glColor4f(1, 1, 0.5, 0.5);
@@ -397,19 +397,19 @@ void az_draw_upgrade_icon(az_upgrade_t upgrade, az_clock_t clock) {
       } glEnd();
       break;
     case AZ_UPG_GUN_TRIPLE:
-      glBegin(GL_QUADS); {
+      glBegin(GL_TRIANGLE_STRIP); {
         glColor3f((frame == 1), 1, (frame == 1));
         glVertex2d(2, 11); glVertex2d(-2, 11);
         glColor4f(0, 1, 0, 0.125);
-        glVertex2d(-2, -12); glVertex2d(2, -12);
+        glVertex2d(2, -12); glVertex2d(-2, -12);
         glColor3f((frame == 2), 1, (frame == 2));
         glVertex2d(12, 9); glVertex2d(8, 9);
         glColor4f(0, 1, 0, 0.125);
-        glVertex2d(2, -12); glVertex2d(5, -12);
+        glVertex2d(5, -12); glVertex2d(2, -12);
         glColor3f((frame == 3), 1, (frame == 3));
         glVertex2d(-8, 9); glVertex2d(-12, 9);
         glColor4f(0, 1, 0, 0.125);
-        glVertex2d(-5, -12); glVertex2d(-2, -12);
+        glVertex2d(-2, -12); glVertex2d(-5, -12);
       } glEnd();
       break;
     case AZ_UPG_GUN_HOMING:
@@ -511,12 +511,12 @@ void az_draw_upgrade_icon(az_upgrade_t upgrade, az_clock_t clock) {
       glPushMatrix(); {
         glRotatef(-90, 0, 0, 1);
         glColor3f(0.5, 0, 0.5); // dark magenta
-        glBegin(GL_QUADS); {
+        glBegin(GL_TRIANGLE_STRIP); {
           const int x = -8 + 3 * frame;
           glVertex2i(x, (frame >= 2 ? -9 : -10));
           glVertex2i(x + 4, (frame >= 2 ? -10 : -9));
-          glVertex2i(x + 4, (frame >= 2 ? -3 : -1));
           glVertex2i(x, (frame >= 2 ? -1 : -3));
+          glVertex2i(x + 4, (frame >= 2 ? -3 : -1));
         } glEnd();
         glBegin(GL_QUAD_STRIP); {
           glColor3f(0.25, 0.25, 0.25); // dark gray
@@ -530,12 +530,12 @@ void az_draw_upgrade_icon(az_upgrade_t upgrade, az_clock_t clock) {
           glVertex2i(4, 1);
         } glEnd();
         glColor3f(0.6, 0, 0.6); // dark magenta
-        glBegin(GL_QUADS); {
+        glBegin(GL_TRIANGLE_STRIP); {
           const int x = 4 - 3 * frame;
           glVertex2i(x, (frame < 2 ? -9 : -10));
           glVertex2i(x + 4, (frame < 2 ? -10 : -9));
-          glVertex2i(x + 4, (frame < 2 ? -3 : -1));
           glVertex2i(x, (frame < 2 ? -1 : -3));
+          glVertex2i(x + 4, (frame < 2 ? -3 : -1));
         } glEnd();
       } glPopMatrix();
       break;
@@ -804,14 +804,14 @@ void az_draw_upgrade_icon(az_upgrade_t upgrade, az_clock_t clock) {
           glColor3f(0.7, 0, 0); glVertex2d(4 * c, 4 * s - 3);
         }
       } glEnd();
-      glBegin(GL_QUADS); {
+      glBegin(GL_TRIANGLE_STRIP); {
         for (int i = -1; i <= 1; i += 2) {
           glColor3f(0.5, 0.6, 0.6);
           glVertex2f(i * 2, 6); glVertex2f(i * 6, 6);
-          glColor3f(1, 0, 0);
-          glVertex2f(i * 7.7, -1);
           glColor3f(0.7, 0, 0);
           glVertex2f(i * 3.9, -2.3);
+          glColor3f(1, 0, 0);
+          glVertex2f(i * 7.7, -1);
         }
       } glEnd();
       break;
@@ -870,12 +870,12 @@ void az_draw_upgrade_icon(az_upgrade_t upgrade, az_clock_t clock) {
     case AZ_UPG_ROCKET_AMMO_28:
     case AZ_UPG_ROCKET_AMMO_29:
       glColor3f(0.5, 0, 0); // dark red
-      glBegin(GL_QUADS); {
+      glBegin(GL_TRIANGLE_STRIP); {
         const int x = 4 - 3 * frame;
         glVertex2i(x, -10);
         glVertex2i(x + 4, -10);
-        glVertex2i(x + 4, -2);
         glVertex2i(x, -2);
+        glVertex2i(x + 4, -2);
       } glEnd();
       glBegin(GL_QUAD_STRIP); {
         glColor3f(0.25, 0.25, 0.25); // dark gray
@@ -889,12 +889,12 @@ void az_draw_upgrade_icon(az_upgrade_t upgrade, az_clock_t clock) {
         glVertex2i(4, 6);
       } glEnd();
       glColor3f(0.5, 0, 0); // dark red
-      glBegin(GL_QUADS); {
+      glBegin(GL_TRIANGLE_STRIP); {
         const int x = -8 + 3 * frame;
         glVertex2i(x, -10);
         glVertex2i(x + 4, -10);
-        glVertex2i(x + 4, -2);
         glVertex2i(x, -2);
+        glVertex2i(x + 4, -2);
       } glEnd();
       break;
     case AZ_UPG_BOMB_AMMO_00:
@@ -979,10 +979,10 @@ void az_draw_upgrade_icon(az_upgrade_t upgrade, az_clock_t clock) {
 
 static void draw_upgrade(az_upgrade_t upgrade, az_clock_t clock) {
   az_draw_upgrade_icon(upgrade, clock);
-  glBegin(GL_QUADS); {
+  glBegin(GL_TRIANGLE_STRIP); {
     glColor4f(1, 1, 1, 0.25); glVertex2f(-12, 12);
     glColor4f(1, 1, 1, 0.15); glVertex2f(-12, -12);
-    glColor4f(1, 1, 1, 0.1); glVertex2f(12, -12); glVertex2f(12, 12);
+    glColor4f(1, 1, 1, 0.1); glVertex2f(12, 12); glVertex2f(12, -12);
   } glEnd();
   glColor3f(1, az_clock_mod(2, 10, clock), 1);
   glBegin(GL_LINE_LOOP); {

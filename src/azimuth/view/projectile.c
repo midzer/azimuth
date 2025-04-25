@@ -34,12 +34,12 @@
 
 static void draw_rocket(az_clock_t clock, az_color_t color) {
   glColor3ub(color.r, color.g, color.b);
-  glBegin(GL_QUADS); {
+  glBegin(GL_TRIANGLE_STRIP); {
     const int y = 2 - az_clock_mod(6, 2, clock);
     glVertex2i(-11, y);
     glVertex2i(-11, y + 2);
-    glVertex2i(-4, y + 2);
     glVertex2i(-4, y);
+    glVertex2i(-4, y + 2);
   } glEnd();
   glBegin(GL_QUAD_STRIP); {
     glColor3f(0.25, 0.25, 0.25); // dark gray
@@ -53,12 +53,12 @@ static void draw_rocket(az_clock_t clock, az_color_t color) {
     glVertex2i(2, 2);
   } glEnd();
   glColor3ub(color.r, color.g, color.b);
-  glBegin(GL_QUADS); {
+  glBegin(GL_TRIANGLE_STRIP); {
     const int y = -4 + az_clock_mod(6, 2, clock);
     glVertex2i(-11, y);
     glVertex2i(-11, y + 2);
-    glVertex2i(-4, y + 2);
     glVertex2i(-4, y);
+    glVertex2i(-4, y + 2);
   } glEnd();
 }
 
@@ -169,7 +169,7 @@ void az_draw_projectile(const az_projectile_t *proj, az_clock_t clock) {
     case AZ_PROJ_GUN_PHASE_SHRAPNEL:
     case AZ_PROJ_GUN_PHASE_PIERCE:
     case AZ_PROJ_SONIC_WAVE:
-      glBegin(GL_QUADS); {
+      glBegin(GL_TRIANGLE_STRIP); {
         const double r1 = proj->age * proj->data->speed;
         const double w1 = r1 * tan(AZ_DEG2RAD(0.5));
         const double a = proj->age / proj->data->lifetime;
@@ -187,8 +187,8 @@ void az_draw_projectile(const az_projectile_t *proj, az_clock_t clock) {
         else if (proj->kind == AZ_PROJ_GUN_PHASE_PIERCE &&
                  az_clock_mod(2, 2, clock)) glColor4f(1, 0, 1, 0);
         else glColor4f(1, 0.5, 0, 0);
-        glVertex2d(-r2, w2);
         glVertex2d(-r2, -w2);
+        glVertex2d(-r2, w2);
       } glEnd();
       break;
     case AZ_PROJ_GUN_CHARGED_PHASE:
@@ -215,13 +215,13 @@ void az_draw_projectile(const az_projectile_t *proj, az_clock_t clock) {
     case AZ_PROJ_GUN_BURST_PIERCE:
       glPushMatrix(); {
         glRotated(720.0 * proj->age, 0, 0, 1);
-        glBegin(GL_QUADS); {
+        glBegin(GL_TRIANGLE_STRIP); {
           glColor3f(0.75, 0.5, 0.25); // brown
-          glVertex2f( 2, -3); glVertex2f( 5, 0); glVertex2f( 2,  3);
+          glVertex2f( 2, -3); glVertex2f( 5, 0); glVertex2f(-1, 0);
           glColor3f(0.5, 0.25, 0); // dark brown
-          glVertex2f(-1, 0); glVertex2f( 1, 0);
+          glVertex2f( 2,  3); glVertex2f( 1, 0);
           glColor3f(0.75, 0.5, 0.25); // brown
-          glVertex2f(-2,  3); glVertex2f(-5, 0); glVertex2f(-2, -3);
+          glVertex2f(-2,  3); glVertex2f(-2, -3); glVertex2f(-5, 0);
         } glEnd();
       } glPopMatrix();
       break;
@@ -394,20 +394,20 @@ void az_draw_projectile(const az_projectile_t *proj, az_clock_t clock) {
       } glEnd();
       break;
     case AZ_PROJ_FORCE_WAVE:
-      glBegin(GL_QUADS); {
+      glBegin(GL_TRIANGLE_STRIP); {
         const GLfloat factor = fmin(1.0, 2.0 * proj->age);
         glColor4f(0, 0.25, 0.5, 0.75);
         glVertex2f(0, -50 * factor);
         glVertex2f(0, 50 * factor);
         glColor4f(0, 0, 0.5, 0);
-        glVertex2f(-150 * factor, 50 * factor);
         glVertex2f(-150 * factor, -50 * factor);
+        glVertex2f(-150 * factor, 50 * factor);
       } glEnd();
       break;
     case AZ_PROJ_GRENADE:
-      glBegin(GL_QUADS); {
+      glBegin(GL_TRIANGLE_STRIP); {
         glColor3f(0.4, 0.25, 0.25); glVertex2f(2, 3); glVertex2f(-2, 3);
-        glVertex2f(-2, -3); glVertex2f(2, -3);
+        glVertex2f(2, -3); glVertex2f(-2, -3);
       } glEnd();
       glBegin(GL_TRIANGLE_FAN); {
         glColor3f(0.7, 0.7, 0.7); glVertex2f(2, 0); glColor3f(0.5, 0.5, 0.5);
@@ -445,11 +445,11 @@ void az_draw_projectile(const az_projectile_t *proj, az_clock_t clock) {
       } glEnd();
       break;
     case AZ_PROJ_LASER_PULSE:
-      glBegin(GL_QUADS); {
+      glBegin(GL_TRIANGLE_STRIP); {
         glColor3f(1, 0.3, 0);
         glVertex2f(0, -1.5); glVertex2f(0, 1.5);
         glColor4f(1, 0.3, 0, 0);
-        glVertex2f(-20, 1.5); glVertex2f(-20, -1.5);
+        glVertex2f(-20, -1.5); glVertex2f(-20, 1.5);
       } glEnd();
       break;
     case AZ_PROJ_MAGMA_EXPLOSION: break; // invisible
