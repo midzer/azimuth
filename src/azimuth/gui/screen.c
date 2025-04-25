@@ -99,7 +99,7 @@ void az_init_gui(bool fullscreen, bool enable_audio) {
   window = SDL_CreateWindow(
     "Azimuth",
     SDL_WINDOWPOS_CENTERED_DISPLAY(0), SDL_WINDOWPOS_CENTERED_DISPLAY(0),
-    640, 480,
+    display_mode.w, display_mode.h,
     SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI | (fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
   if (NULL == window) {
     AZ_FATAL("SDL_CreateWindow failed: %s\n", SDL_GetError());
@@ -249,10 +249,10 @@ void az_gl_scissor(int x, int y, int width, int height) {
 
 void az_map_mouse_coords(int x_in, int y_in, int *x_out, int *y_out) {
   if(x_out) {
-    *x_out = (x_in - current_screen_xoffset) / current_screen_scale;
+    *x_out = (x_in - current_screen_xoffset);// / current_screen_scale;
   }
   if(y_out) {
-    *y_out = (y_in - current_screen_yoffset) / current_screen_scale;
+    *y_out = (y_in - current_screen_yoffset);// / current_screen_scale;
   }
 }
 
