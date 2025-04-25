@@ -1,0 +1,8 @@
+[
+    "main",
+    "az_finish_screen_redraw",
+    "az_poll_event",
+    "SDL_Delay",
+    "Emscripten_GLES_SwapWindow",
+    "dynCall_v"
+]

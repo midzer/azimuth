@@ -1,0 +1,10 @@
+[
+    "main",
+    "az_finish_screen_redraw",
+    "az_space_event_loop",
+    "az_poll_event",
+    "SDL_Delay",
+    "GLES2_RenderPresent",
+    "Emscripten_GLES_SwapWindow",
+    "dynCall_v"
+]
