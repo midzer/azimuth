@@ -82,13 +82,13 @@ static void draw_button(const az_gameover_state_t *state,
 
 void az_gameover_draw_screen(const az_gameover_state_t *state) {
   // Draw pulsing background:
-  glBegin(GL_QUADS); {
+  glBegin(GL_TRIANGLE_STRIP); {
     glColor4f(0.5, 0, 1, 0);
     glVertex2i(0, 0);
     glVertex2i(AZ_SCREEN_WIDTH, 0);
     glColor4f(0.5, 0, 1, 0.1f + 0.003f * az_clock_zigzag(40, 2, state->clock));
-    glVertex2i(AZ_SCREEN_WIDTH, AZ_SCREEN_HEIGHT);
     glVertex2i(0, AZ_SCREEN_HEIGHT);
+    glVertex2i(AZ_SCREEN_WIDTH, AZ_SCREEN_HEIGHT);
   } glEnd();
 
   az_draw_planet_starfield(state->clock);
@@ -119,11 +119,11 @@ void az_gameover_draw_screen(const az_gameover_state_t *state) {
   }
   if (fade_alpha > 0.0) {
     glColor4f(0, 0, 0, fade_alpha);
-    glBegin(GL_QUADS); {
+    glBegin(GL_TRIANGLE_STRIP); {
       glVertex2i(0, 0);
       glVertex2i(AZ_SCREEN_WIDTH, 0);
-      glVertex2i(AZ_SCREEN_WIDTH, AZ_SCREEN_HEIGHT);
       glVertex2i(0, AZ_SCREEN_HEIGHT);
+      glVertex2i(AZ_SCREEN_WIDTH, AZ_SCREEN_HEIGHT);
     } glEnd();
   }
 

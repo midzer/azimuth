@@ -231,11 +231,11 @@ static void tint_screen(GLfloat alpha) {
   glPushMatrix(); {
     glLoadIdentity();
     glColor4f(0, 0, 0, alpha);
-    glBegin(GL_QUADS); {
+    glBegin(GL_TRIANGLE_STRIP); {
       glVertex2i(0, 0);
       glVertex2i(0, AZ_SCREEN_HEIGHT);
-      glVertex2i(AZ_SCREEN_WIDTH, AZ_SCREEN_HEIGHT);
       glVertex2i(AZ_SCREEN_WIDTH, 0);
+      glVertex2i(AZ_SCREEN_WIDTH, AZ_SCREEN_HEIGHT);
     } glEnd();
   } glPopMatrix();
 }
@@ -248,18 +248,18 @@ static void draw_script_and_uuid_slot(
     camera_to_screen_orient(state, position);
     if (script != NULL) {
       glColor3f(0.75, 0, 1); // purple
-      glBegin(GL_QUADS); {
+      glBegin(GL_TRIANGLE_STRIP); {
         glVertex2f(5, -9); glVertex2f(-5, -9);
-        glVertex2f(-5, 0); glVertex2f(5, 0);
+        glVertex2f(5, 0); glVertex2f(-5, 0);
       } glEnd();
       glColor3f(0, 0, 0); // black
       az_draw_string(8, AZ_ALIGN_CENTER, 0, -8, "$");
     }
     if (uuid_slot != 0) {
       glColor3f(1, 0, 0); // red
-      glBegin(GL_QUADS); {
+      glBegin(GL_TRIANGLE_STRIP); {
         glVertex2f(9, 0); glVertex2f(-9, 0);
-        glVertex2f(-9, 9); glVertex2f(9, 9);
+        glVertex2f(9, 9); glVertex2f(-9, 9);
       } glEnd();
       glColor3f(0, 0, 0); // black
       az_draw_printf(8, AZ_ALIGN_CENTER, 0, 1, "%02d", uuid_slot);
@@ -819,9 +819,9 @@ static void draw_hud(az_editor_state_t *state) {
     const GLfloat bottom = top + EDITOR_TEXT_BOX_ROW_HEIGHT * num_rows;
     // Draw box:
     glColor3f(0, 0, 0); // black
-    glBegin(GL_QUADS); {
+    glBegin(GL_TRIANGLE_STRIP); {
       glVertex2f(left, top); glVertex2f(left, bottom);
-      glVertex2f(right, bottom); glVertex2f(right, top);
+      glVertex2f(right, top); glVertex2f(right, bottom);
     } glEnd();
     glColor3f(0, 1, 1); // cyan
     glBegin(GL_LINE_LOOP); {

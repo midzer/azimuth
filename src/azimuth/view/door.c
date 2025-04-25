@@ -206,10 +206,10 @@ static void draw_door_internal(const az_door_t *door, az_clock_t clock) {
   color3.b *= 0.4f;
 
   if (door->kind == AZ_DOOR_BOSS) {
-    glBegin(GL_QUADS); {
+    glBegin(GL_TRIANGLE_STRIP); {
       glColor4f(0.5, 0.5, 0.5, 0.5);
       glVertex2f(30, -50); glVertex2f(30, 50);
-      glVertex2f(32, 48); glVertex2f(32, -48);
+      glVertex2f(32, -48); glVertex2f(32, 48);
     } glEnd();
   } else if (door->openness < 1.0) {
     assert(door->kind != AZ_DOOR_ALWAYS_OPEN);

@@ -32,17 +32,18 @@
 /*===========================================================================*/
 
 static void draw_swooper_feet(const az_baddie_t *baddie, float frozen) {
-  glBegin(GL_QUADS); {
-    for (int i = 0; i < 2; ++i) {
+  for (int i = 0; i < 2; ++i) {
+    const GLfloat x = (baddie->state == 1 ? -20.0f : -17.0f);
+    const GLfloat y = -4.0f + 8.0f * i;
+    glBegin(GL_TRIANGLE_STRIP); {
       glColor3f(0.5f, 0.15f, 0.1f + 0.6f * frozen);
-      glVertex2f(0, 2); glVertex2f(0, -2);
-      const GLfloat x = (baddie->state == 1 ? -20.0f : -17.0f);
-      const GLfloat y = -4.0f + 8.0f * i;
-      glVertex2f(x, y - 2);
+      glVertex2f(0.0f, 2.0f);
+      glVertex2f(0.0f, -2.0f);
+      glVertex2f(x, y - 2.0f);
       glColor3f(0.2f, 0.1f, 0.4f + 0.6f * frozen);
-      glVertex2f(x, y + 2);
-    }
-  } glEnd();
+      glVertex2f(x, y + 2.0f);
+    } glEnd();
+  }
 }
 
 static void draw_swooper_body(az_color_t inner, az_color_t outer) {

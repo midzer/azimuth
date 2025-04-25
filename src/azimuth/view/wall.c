@@ -149,49 +149,70 @@ static void draw_cell_quad(az_color_t color1, az_color_t color2,
 }
 
 static void draw_girder(
-    float bezel, float strut, az_color_t color1, az_color_t color2,
-    az_polygon_t polygon, bool cap1, bool cap2) {
-  glBegin(GL_QUADS); {
-    assert(polygon.num_vertices >= 3);
-    const float top = polygon.vertices[1].y;
-    const float bottom = polygon.vertices[polygon.num_vertices - 1].y;
-    const float right = polygon.vertices[1].x;
-    const float left = polygon.vertices[2].x;
-    // Struts:
-    const float breadth = top - bottom;
-    for (float x = left; x < right - breadth; x += breadth - strut) {
-      for (int j = 0; j < 2; ++j) {
-        const float y_1 = (j ? bottom : top);
-        const float y_2 = (j ? top : bottom);
+  float bezel, float strut, az_color_t color1, az_color_t color2,
+  az_polygon_t polygon, bool cap1, bool cap2) {
+  assert(polygon.num_vertices >= 3);
+  const float top = polygon.vertices[1].y;
+  const float bottom = polygon.vertices[polygon.num_vertices - 1].y;
+  const float right = polygon.vertices[1].x;
+  const float left = polygon.vertices[2].x;
+  const float breadth = top - bottom;
+
+  // Struts
+  for (float x = left; x < right - breadth; x += breadth - strut) {
+    for (int j = 0; j < 2; ++j) {
+      const float y_1 = (j ? bottom : top);
+      const float y_2 = (j ? top : bottom);
+      glBegin(GL_TRIANGLE_STRIP); {
         az_gl_color(color1);
         glVertex2f(x, y_1); glVertex2f(x + breadth, y_2);
         az_gl_color(color2);
-        glVertex2f(x + breadth + strut, y_2); glVertex2f(x + strut, y_1);
-      }
+        glVertex2f(x + strut, y_1); glVertex2f(x + breadth + strut, y_2);
+      } glEnd();
     }
-    // Edges:
+  }
+
+  // Top Edge
+  glBegin(GL_TRIANGLE_STRIP); {
     az_gl_color(color1);
     glVertex2f(left, top); glVertex2f(right, top);
     az_gl_color(color2);
-    glVertex2f(right, top - bezel); glVertex2f(left, top - bezel);
-    glVertex2f(left, bottom); glVertex2f(right, bottom);
+    glVertex2f(left, top - bezel); glVertex2f(right, top - bezel);
+  } glEnd();
+
+  // Bottom Edge
+  glBegin(GL_TRIANGLE_STRIP); {
+    az_gl_color(color2);
+    glVertex2f(left, bottom);
+    glVertex2f(right, bottom);
     az_gl_color(color1);
-    glVertex2f(right, bottom + bezel); glVertex2f(left, bottom + bezel);
-    if (cap1) {
-      glVertex2f(left, top); glVertex2f(left, bottom);
+    glVertex2f(left, bottom + bezel);
+    glVertex2f(right, bottom + bezel);
+  } glEnd();
+
+  // Left Cap (cap1)
+  if (cap1) {
+    glBegin(GL_TRIANGLE_STRIP); {
+      az_gl_color(color1);
+      glVertex2f(left, top);
+      glVertex2f(left, bottom);
       az_gl_color(color2);
-      glVertex2f(left + bezel, bottom + bezel);
       glVertex2f(left + bezel, top - bezel);
-    }
-    if (cap2) {
+      glVertex2f(left + bezel, bottom + bezel);
+    } glEnd();
+  }
+
+  // Right Cap (cap2)
+  if (cap2) {
+    glBegin(GL_TRIANGLE_STRIP); {
       az_gl_color(color1);
       glVertex2f(right - bezel, bottom + bezel);
       glVertex2f(right - bezel, top - bezel);
       az_gl_color(color2);
-      glVertex2f(right, top);
       glVertex2f(right, bottom);
-    }
-  } glEnd();
+      glVertex2f(right, top);
+    } glEnd();
+  }
 }
 
 static void draw_metal(bool alt, az_color_t color1, az_color_t color2,

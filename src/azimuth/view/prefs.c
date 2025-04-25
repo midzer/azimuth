@@ -151,11 +151,11 @@ static void draw_slider(const az_prefs_slider_t *slider, const char *label,
   glPushMatrix(); {
     glTranslatef(slider->x, slider->y, 0);
     // Slider track:
-    glBegin(GL_QUADS); {
+    glBegin(GL_TRIANGLE_STRIP); {
       glColor3f(0.5, 0.5, 0.5); // gray
       glVertex2f(0, -2); glVertex2f(SLIDER_WIDTH, -2);
       glColor3f(0.25, 0.25, 0.25); // dark gray
-      glVertex2f(SLIDER_WIDTH, 2); glVertex2f(0, 2);
+      glVertex2f(0, 2); glVertex2f(SLIDER_WIDTH, 2);
     } glEnd();
     // Label:
     if (cyan) glColor3f(0.75, 1, 1); // cyan

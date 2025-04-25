@@ -89,30 +89,30 @@ static void draw_baddie_outline(const az_baddie_t *baddie, float frozen,
 #endif
 
 static void draw_box(const az_baddie_t *baddie, bool armored, float flare) {
-  glBegin(GL_QUADS); {
+  glBegin(GL_TRIANGLE_STRIP); {
     if (armored) glColor3f(0.45, 0.45 - 0.3 * flare, 0.65 - 0.3 * flare);
     else glColor3f(0.65, 0.65 - 0.3 * flare, 0.65 - 0.3 * flare); // light gray
     glVertex2f(10, 7); glVertex2f(-10, 7);
-    glVertex2f(-10, -7); glVertex2f(10, -7);
+    glVertex2f(10, -7); glVertex2f(-10, -7);
 
     glColor3f(0.2, 0.2, 0.2); // dark gray
     glVertex2f(11, 13); glVertex2f(-11, 13);
     if (armored) glColor3f(0.4, 0.4 - 0.3 * flare, 0.6 - 0.3 * flare);
     else glColor3f(0.6, 0.6 - 0.3 * flare, 0.6 - 0.3 * flare); // gray
-    glVertex2f(-10, 7); glVertex2f(10, 7);
+    glVertex2f(10, 7); glVertex2f(-10, 7);
 
     glVertex2f(-10, -7); glVertex2f(-10, 7);
     glColor3f(0.2, 0.2, 0.2); // dark gray
-    glVertex2f(-16, 8); glVertex2f(-16, -8);
+    glVertex2f(-16, -8); glVertex2f(-16, 8);
 
     glVertex2f(16, -8); glVertex2f(16, 8);
     if (armored) glColor3f(0.4, 0.4 - 0.3 * flare, 0.6 - 0.3 * flare);
     else glColor3f(0.6, 0.6 - 0.3 * flare, 0.6 - 0.3 * flare); // gray
-    glVertex2f(10, 7); glVertex2f(10, -7);
+    glVertex2f(10, -7); glVertex2f(10, 7);
 
     glVertex2f(10, -7); glVertex2f(-10, -7);
     glColor3f(0.2, 0.2, 0.2); // dark gray
-    glVertex2f(-11, -13); glVertex2f(11, -13);
+    glVertex2f(11, -13); glVertex2f(-11, -13);
   } glEnd();
   glBegin(GL_TRIANGLES); {
     glColor3f(0.3, 0.3 - 0.2 * flare, 0.3 - 0.2 * flare); // dark gray
@@ -132,11 +132,11 @@ static void draw_box(const az_baddie_t *baddie, bool armored, float flare) {
 static void draw_mine_arms(GLfloat length, float flare, float frozen) {
   glPushMatrix(); {
     for (int i = 0; i < 3; ++i) {
-      glBegin(GL_QUADS); {
+      glBegin(GL_TRIANGLE_STRIP); {
         glColor3f(0.55 + 0.4 * flare, 0.55, 0.5 + 0.5 * frozen);
         glVertex2f(0, 1.5); glVertex2f(length, 1.5);
         glColor3f(0.35 + 0.3 * flare, 0.35, 0.3 + 0.3 * frozen);
-        glVertex2f(length, -1.5); glVertex2f(0, -1.5);
+        glVertex2f(0, -1.5); glVertex2f(length, -1.5);
       } glEnd();
       glRotatef(120, 0, 0, 1);
     }
@@ -345,11 +345,11 @@ static void draw_baddie_internal(const az_baddie_t *baddie, az_clock_t clock) {
       }
       break;
     case AZ_BAD_BEAM_WALL:
-      glBegin(GL_QUADS); {
+      glBegin(GL_TRIANGLE_STRIP); {
         // Interior:
         glColor3f(0.3, 0.3, 0.3);
         glVertex2f(50, 15); glVertex2f(-50, 15);
-        glVertex2f(-50, -15); glVertex2f(50, -15);
+        glVertex2f(50, -15); glVertex2f(-50, -15);
         // Diagonal struts:
         for (int i = 0; i < 3; ++i) {
           const float x = -50 + 32 * i;
@@ -358,7 +358,7 @@ static void draw_baddie_internal(const az_baddie_t *baddie, az_clock_t clock) {
             glColor3f(0.75 + 0.25 * flare, 0.75, 0.75);
             glVertex2f(x, y); glVertex2f(x + 32, -y);
             glColor3f(0.35 + 0.35 * flare, 0.4, 0.35);
-            glVertex2f(x + 32 + 4, -y); glVertex2f(x + 4, y);
+            glVertex2f(x + 4, y); glVertex2f(x + 32 + 4, -y);
           }
 
         }

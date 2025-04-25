@@ -44,7 +44,7 @@ static void draw_trapezoid_gravfield(const az_gravfield_t *gravfield) {
   const double stride = 100.0;
   const double offset =
     az_signmod(0.5 * gravfield->age, stride, gravfield->strength);
-  glBegin(GL_QUADS); {
+  glBegin(GL_TRIANGLE_STRIP); {
     const double xlimit =
       (gravfield->strength < 0.0 ? -semilength - stride : -semilength);
     for (double x0 = semilength + offset; x0 > xlimit; x0 -= stride) {
@@ -59,8 +59,8 @@ static void draw_trapezoid_gravfield(const az_gravfield_t *gravfield) {
       glVertex2d(x0a, -rear_semiwidth + (x0a + semilength) * bottom_ratio);
       glVertex2d(x0a, rear_semiwidth + (x0a + semilength) * top_ratio);
       glColor4f(0, 0, 0.5, alpha_mult * fabs(x1a - x1) / stride);
-      glVertex2d(x1a, rear_semiwidth + (x1a + semilength) * top_ratio);
       glVertex2d(x1a, -rear_semiwidth + (x1a + semilength) * bottom_ratio);
+      glVertex2d(x1a, rear_semiwidth + (x1a + semilength) * top_ratio);
     }
   } glEnd();
 }

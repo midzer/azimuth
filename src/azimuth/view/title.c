@@ -315,11 +315,11 @@ static void draw_background(const az_title_state_t *state) {
 
   if (flash > 0.0) {
     glColor4f(1, 1, 1, flash);
-    glBegin(GL_QUADS); {
+    glBegin(GL_TRIANGLE_STRIP); {
       glVertex2i(0, 0);
       glVertex2i(AZ_SCREEN_WIDTH, 0);
-      glVertex2i(AZ_SCREEN_WIDTH, AZ_SCREEN_HEIGHT);
       glVertex2i(0, AZ_SCREEN_HEIGHT);
+      glVertex2i(AZ_SCREEN_WIDTH, AZ_SCREEN_HEIGHT);
     } glEnd();
   }
 }
@@ -824,11 +824,11 @@ void az_init_title_state(az_title_state_t *state, const az_planet_t *planet,
 
 static void fade_screen_black(GLfloat alpha) {
   glColor4f(0, 0, 0, alpha);
-  glBegin(GL_QUADS); {
+  glBegin(GL_TRIANGLE_STRIP); {
     glVertex2i(0, 0);
     glVertex2i(AZ_SCREEN_WIDTH, 0);
-    glVertex2i(AZ_SCREEN_WIDTH, AZ_SCREEN_HEIGHT);
     glVertex2i(0, AZ_SCREEN_HEIGHT);
+    glVertex2i(AZ_SCREEN_WIDTH, AZ_SCREEN_HEIGHT);
   } glEnd();
 }
 
